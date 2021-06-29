@@ -25,7 +25,9 @@ class App extends Component {
     e.preventDefault()
     try {
       let axiosResponed = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.0a80fd547a3c1e8574e39921b81514c5&q=${this.state.city_name}&format=json`);
+      // const axiosLocalApi = await axios.get(`http://localhost:8000/weather-list?lat=31.95&lon=35.91&searchQuery=${this.state.city_name}`)
       const axiosLocalApi = await axios.get(`http://localhost:8000/weather-list?lat=31.95&lon=35.91&searchQuery=${this.state.city_name}`)
+
       this.setState({
         city_name: axiosResponed.data[0].city_name,
         latitude: axiosResponed.data[0].lat,
