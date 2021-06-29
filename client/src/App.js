@@ -1,101 +1,71 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import AlertMessage from './AlertMessage';
+import Weather from './Weather';
+import Image from 'react-bootstrap/Image';
 import axios from 'axios';
-import Image from 'react-bootstrap/Image'
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayName: '',
-      errorMessage: true,
-      showError: false,
-      long: '',
-      lat: '',
-      city: '',
-
-
+      city_name: '',
+      latitude: '',
+      longitude: '',
+      error: '',
+      show: false,
+      WeatherData:[]
     }
   }
-  changeHandler = (e) => {
+ 
+  handlerData = (e) => {
     this.setState({
-      cityName: e.target.value,
-
-
-    });
+      city_name: e.target.value,
+    })
   }
-
-  submitData = async (e) => {
+  handlerSubmit = async (e) => {
     e.preventDefault()
     try {
-      let axiosData = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.b25689e45ce9b253dc8d624cf71fa8e1&city=${this.state.displayName}&format=json`)
-      // let axiosReqApi = await axios.get(`http://localhost:8000/weather-list?key=pk.b25689e45ce9b253dc8d624cf71fa8e1&city=${this.state.latitude}&${this.state.longitude}&format=json`).catch(error => {
-        this.setState({
-          cityData: axiosReqApi.data.city_name,
-          longitude: axiosReqApi.data.lon,
-          latitude: axiosReqApi.data.lat,
-          display: true,
-          // weatherData: axiosReqApi.data,
-          errorMessage: false
-
-        })
-
-      }     
-      catch(error) {
-        this.setState({ errorMessage: error.message });
-        out = true;
-        showError: true
-
-      }
-   
-
-
+      let axiosResponed = await axios.get(`https://eu1.locationiq.com/v1/search.php?key=pk.0a80fd547a3c1e8574e39921b81514c5&q=${this.state.city_name}&format=json`);
+      const axiosLocalApi = await axios.get(`http://localhost:8000/weather-list?lat=31.95&lon=35.91&searchQuery=${this.state.city_name}`)
+      this.setState({
+        city_name: axiosResponed.data[0].city_name,
+        latitude: axiosResponed.data[0].lat,
+        longitude: axiosResponed.data[0].lon,
+        alert:false,
+        show: true,
+        weatherData:axiosLocalApi.data
+      })
+      console.log(axiosLocalApi.data)
+      console.log(axiosResponed.data)
+    }catch (error){
+      this.setState({
+        error:"please provide a valid city name",
+        alert:true,
+        show:false,
+      })
+    }
   }
-
   render() {
-
     return (
-      <div>
-
-        <form onSubmit={this.submitData} style={{ marginLeft: '20px', paddingTop: '20px' }}>
-          <input type='text' placeholder='city name....' onChange={this.changeHandler} />
-          <button>Explore</button>
+      <>
+      <AlertMessage 
+      alert={this.state.alert}
+      error={this.state.error}/>
+        <form onSubmit={this.handlerSubmit} style={{ marginLeft: '100px', paddingTop: '20px', marginButton: '20px', display: 'block', width: '50px' }}>
+          <input type='text' placeholder='City Name' onChange={(e) => { this.handlerData(e) }} />
+          <button >Explorer!</button>
         </form>
-        {
-          this.state.errorMessage === false &&
+        <div>
+        {this.state.show &&
           <div>
-            <h1>{this.state.displayName}</h1>
-            <h1>{this.state.longitude}</h1>
-            <h1>{this.state.latitude}</h1>
-            <p>
-              {
-                this.state.cityData.display_name
-              }
-            </p>
-            <Image alt="map" src={`https://maps.locationiq.com/v3/staticmap?key=pk.b25689e45ce9b253dc8d624cf71fa8e1&center=${this.state.latitude},${this.state.longitude}&zoom=1-18`}
-              fluid style={{ margin: '100px' }} />
-            <p>
-              {`latitude:${this.state.cityData.lat},longitude:${this.state.cityData.lon}`}
-            </p>
+            <h5>{this.state.city_name}</h5>
+            <Image alt='map' src={`https://maps.locationiq.com/v3/staticmap?key=pk.0a80fd547a3c1e8574e39921b81514c5&center=${this.state.latitude},${this.state.longitude}&zoom=1-8`} fluid style={{ margin: '100px', width: '1000px' }} />
           </div>
-
         }
-        {/* {
-          this.this.weatherData.map(weatherData => {
-            return <weather description={weatherData.description} date={weatherData.date} />
-          // this.state.showError &&
-          // <div>
-          //   <h1>ERROR</h1>
-          //   <p>{this.state.errorMessage}</p>
-         
-        }} */}
+        </div>
+        {/* <Weather ren={this.state.alert}/> */}
 
-      </div>
-
+      </>
     )
   }
 }
-
-
-export default App
+export default App;
