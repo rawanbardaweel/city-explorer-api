@@ -25,6 +25,7 @@ app.get('/weather-list', (req, res) => {
  })
  
 });
+
 let urlMovie=(`https://api.themoviedb.org/3/movie/550?api_key=46d08c58562bf1fb960bba0c5a501ea1`)
 let axiosMovie=axios.get(urlMovie).then(response=>{
   movie=response.data
@@ -34,7 +35,7 @@ let axiosMovie=axios.get(urlMovie).then(response=>{
 res.json(movieRen);
 })
 
-});
+
 
 
 
