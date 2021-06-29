@@ -31,7 +31,7 @@ app.get('/weather-list', (req, res) => {
 class ForeCast {
   constructor(weatherData) {
     this.date = weatherData.valid_date
-    this.description = weatherData.description
+    this.description = weatherData.weather.description
   }
 }
 
