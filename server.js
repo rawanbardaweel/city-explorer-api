@@ -1,10 +1,11 @@
 
-const express = require('express') // require the express package
-const app = express() // initialize your express app instance
+const express = require('express') 
+const app = express() 
 const cors = require('cors');
 const weatherData = require('./data/weather.json')
 require('dotenv').config();
-app.use(cors()) // after you initialize your express app instance
+app.use(cors()) 
+
 
 
 
@@ -14,14 +15,14 @@ app.get('/weather-list', (req, res) => {
   let searchQuery = req.query.searchQuery
   try {
     let findData = () => {
-      let city = weather.find((city, idx) => {
-        return (city.city_name.toLowerCase() === searchQuery.toLowerCase() && city.lat===Number(lat) && city.lon===Number(lon))
+      let city = weatherData.find((city, idx) => {
+        return (city.city_name.toLowerCase() === searchQuery.toLowerCase() && Number(city.lat)===Number(lat) && Number(city.lon)===Number(lon))
       })
       return city.data.map(iteam => {
         return new ForeCast(iteam)
       })
     }
-    res.send('Hello World')
+    
     res.json(findData());
   } catch (error) {
     res.json({ message: 'Something went error' })
