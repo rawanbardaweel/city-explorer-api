@@ -11,7 +11,7 @@ const axios =require ('axios');
 
 
 app.get('/weather-list', (req, res) => {
-  
+  let weather;
   let lat = req.query.lat
   let lon = req.query.lon
   let searchQuery = req.query.searchQuery
@@ -26,18 +26,17 @@ app.get('/weather-list', (req, res) => {
  
 });
 
-let urlMovie=(`https://api.themoviedb.org/3/movie/550?api_key=46d08c58562bf1fb960bba0c5a501ea1`)
-let axiosMovie=axios.get(urlMovie).then(response=>{
-  movie=response.data
-  let movieRen=movie.data.map((item,idx)=>{
-    return new Movie(item)
+app.get('/movie', (req, res) => {
+  // let movies;
+  let query=req.query.query
+  let urlMovie=`https://api.themoviedb.org/3/search/movie?api_key=46d08c58562bf1fb960bba0c5a501ea1&query=${query}`
+  axios.get(urlMovie).then(response=>{
+  const movies=response.data.results.map((item,idx)=>{
+  return new Movie(item)     
 })
-res.json(movieRen);
+res.send(movies)
+}).catch(error=>res.send(error.message));
 })
-
-
-
-
 
 class ForeCast {
   constructor(weatherData) {
@@ -45,17 +44,13 @@ class ForeCast {
     this.description = weatherData.weather.description
   }
 }
-class Movie {
-  constructor(movies) {
-    this.title = movies.title
-    this.overview = movies.overview
-    this.average_votes = movies.average_votes
-    this.total_votes = movies.total_votes
-    this.image_url = image_url
-    this.popularity = popularity
-    this.released_on = released_on
 
+class Movie {
+  constructor(moviesData) {
+    this.title = moviesData.original_title
+    this.votes = moviesData.vote_count
+    this.img ='http://image.tmdb.org/t/p/w342'+moviesData.poster_path;
   }
 }
-app.listen(process.env.PORT)
 
+app.listen(process.env.PORT)
