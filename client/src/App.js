@@ -43,7 +43,7 @@ class App extends Component {
       })
       // const axiosLocalApi = await axios.get(`http://localhost:8000/weather-list?lat=31.95&lon=35.91&searchQuery=${this.state.city_name}`)
       // const axiosLocalApi = await axios.get(`http://localhost:8000/weather-list?lat=31.95&lon=35.91&searchQuery=${this.state.city_name}`)
-      let weatherApiUrl=`http://localhost:8000/weather-list/?lat=${this.state.latitude}&lon=${this.state.longitude}&searchQuery=${this.state.city_name}`
+      let weatherApiUrl=`http://localhost:8000/weather-list?lat=${this.state.latitude}&lon=${this.state.longitude}&searchQuery=${this.state.city_name}`
       let weatherGet=await axios.get(weatherApiUrl)
         this.setState({
           weather:weatherGet.data,
@@ -72,22 +72,22 @@ class App extends Component {
   render() {
     return (
       <>
-      <AlertMessage 
+      {/* <AlertMessage 
       alert={this.state.alert}
-      error={this.state.error}/>
+      error={this.state.error}/> */}
         <form onSubmit={this.handlerSubmit} style={{ marginLeft: '100px', paddingTop: '20px', marginButton: '20px', display: 'block', width: '50px' }}>
           <input type='text' placeholder='City Name' onChange={(e) => { this.handlerData(e) }} />
           <button >Explorer!</button>
         </form>
         <div>
-        {this.state.show &&
+        { 
           <div>
             <h1>{this.state.city_name}</h1>
             <h1>{this.state.longitude}</h1>
             <h1>{this.state.latitude}</h1>
            
             <Image alt='map' src={`https://maps.locationiq.com/v3/staticmap?key=pk.0a80fd547a3c1e8574e39921b81514c5&center=${this.state.latitude},${this.state.longitude}&zoom=1-8`} fluid style={{ margin: '100px', width: '1000px' }} />
-            
+          { console.log(this.state.weather) }          
 {
    this.state.weather.map((elemnt,index)=>{
     return (
