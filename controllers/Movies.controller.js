@@ -1,4 +1,7 @@
- import Movie from ('../models/Moviesmodel')
+const axios=require('axios')
+
+ const Movie=require('../models/Moviesmodel')
+
 
 const movieController=(req,res)=>{
   let query=req.query.query
