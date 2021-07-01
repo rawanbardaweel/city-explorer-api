@@ -6,3 +6,5 @@ class ForeCast {
   }
 
 module.exports=ForeCast
+
+

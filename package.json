@@ -18,8 +18,10 @@
   "homepage": "https://github.com/baradweelrawan/city-explorer-api#readme",
   "dependencies": {
     "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "react-bootstrap": "^1.6.1"
   }
 }

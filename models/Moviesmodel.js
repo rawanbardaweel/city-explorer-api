@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 class Movie {
     constructor(moviesData) {
       this.title = moviesData.original_title
@@ -6,4 +8,4 @@ class Movie {
     }
   }
 
-module.exports=Movie  
+module.exports=Movie

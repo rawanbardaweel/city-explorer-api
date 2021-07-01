@@ -1,4 +1,4 @@
-const Movies=require('../models/Movies.model');
+ import Movie from ('../models/Moviesmodel')
 
 const movieController=(req,res)=>{
   let query=req.query.query

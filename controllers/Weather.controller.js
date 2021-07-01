@@ -1,4 +1,6 @@
-const Weather=require('../models/Weather.model');
+import ForeCast from ('../models/Weathermodels.js')
+
+// const ForeCast=require('../models/Weathermodels.js');
 
 const weatherController=(req,res)=>{
     let weather;
@@ -13,7 +15,7 @@ const weatherController=(req,res)=>{
   })
   res.json(forecast);
  })
- 
+  
 }
 
 module.exports=weatherController
