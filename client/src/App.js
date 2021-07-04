@@ -51,7 +51,7 @@ class App extends Component {
         })
       
 
-      let moviesUrl=`http://localhost:8000/movie?query=amman`
+      let moviesUrl=`http://localhost:8000/movie/?query=amman`
       let moviesGet=await axios.get(moviesUrl)
         this.setState({
           movies:moviesGet.data,
